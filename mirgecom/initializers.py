@@ -936,7 +936,7 @@ class PlanarDiscontinuity:
         if self._xdir >= self._dim:
             self._xdir = self._dim - 1
 
-    def __call__(self, x_vec, eos, *, t=0.0):
+    def __call__(self, x_vec, eos, *, time=0.0):
         """
         Create the mixture state at locations *x_vec*.
 
@@ -949,9 +949,9 @@ class PlanarDiscontinuity:
             these functions:
             `eos.get_density`
             `eos.get_internal_energy`
-        t: float
-            Time at which solution is desired.
-            The location is (optionally) dependent on time
+        time: float
+            Time at which solution is desired. The location of the discontinuity
+            is (optionally) dependent on time.
         """
         if x_vec.shape != (self._dim,):
             raise ValueError(f"Position vector has unexpected dimensionality,"
@@ -962,7 +962,7 @@ class PlanarDiscontinuity:
         if isinstance(self._disc_location, Number):
             x0 = self._disc_location
         else:
-            x0 = self._disc_location(t)
+            x0 = self._disc_location(time)
 
         xtanh = 1.0/self._sigma*(x0 - x)
         weight = 0.5*(1.0 - actx.np.tanh(xtanh))
