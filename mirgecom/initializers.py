@@ -886,8 +886,9 @@ class PlanarDiscontinuity:
             specifies the number of dimensions for the solution
         normal_dir: int
             specifies the direction (plane) the discontinuity is applied in
-        disc_location: float or Function[float]
-           location of discontinuity (in time)
+        disc_location: float or Callable
+            fixed location of discontinuity, or optionally a function that
+            returns the time-dependent location
         nspecies: int
             specifies the number of mixture species
         pressure_left: float
@@ -938,7 +939,7 @@ class PlanarDiscontinuity:
 
     def __call__(self, x_vec, eos, *, time=0.0):
         """
-        Create the mixture state at locations *x_vec*.
+        Create the Planar Discontinuity solution state at locations *x_vec*.
 
         Parameters
         ----------
